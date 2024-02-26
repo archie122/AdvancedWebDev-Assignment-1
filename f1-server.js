@@ -12,7 +12,11 @@ app.get('/api/seasons', async (req, res) => {
     const {data, error} = await supabase
         .from('seasons')
         .select();
-    res.send(data);
+    if (error) {
+        res.send('Not found');
+    } else {
+        res.send(data);
+    }
 });
 
 // API Endpoint 2
@@ -20,7 +24,12 @@ app.get('/api/circuits', async (req, res) => {
     const {data, error} = await supabase
         .from('circuits')
         .select();
-    res.send(data);
+    
+    if (error) {
+        res.send('Not found');
+    } else {
+        res.send(data);
+    }
 });
 
 // API Endpoint 3
@@ -31,7 +40,12 @@ app.get('/api/circuits/:ref', async (req, res) => {
             circuitId, name, location, country, url
         `)
         .eq('circuitRef', req.params.ref);
-    res.send(data);
+    
+    if (error) {
+        res.send('Not found');
+    } else {
+        res.send(data);
+    }
 });
 
 // API Endpoint 4
@@ -41,7 +55,12 @@ app.get('/api/circuits/season/:year', async (req, res) =>{
         .select('circuits (name, location, country ), year')
         .eq('year', req.params.year)
         .order('round', { ascending: true });
-    res.send(data);
+    
+    if (error) {
+        res.send('Not found');
+    } else {
+        res.send(data);
+    }
 })
 
 // API Endpoint 5
@@ -49,7 +68,12 @@ app.get('/api/constructors', async (req, res) => {
     const {data, error} = await supabase
         .from('constructors')
         .select();
-    res.send(data);
+    
+    if (error) {
+        res.send('Not found');
+    } else {
+        res.send(data);
+    }
 })
 
 // API Endpoint 6
@@ -58,7 +82,12 @@ app.get('/api/constructors/:ref', async (req, res) => {
         .from('constructors')
         .select()
         .eq('constructorRef', req.params.ref);
-    res.send(data);
+    
+    if (error) {
+        res.send('Not found');
+    } else {
+        res.send(data);
+    }
 })
 
 // API Endpoint 7 
@@ -66,7 +95,12 @@ app.get('/api/drivers', async (req, res) => {
     const {data, error} = await supabase
         .from('drivers')
         .select();
-    res.send(data);
+    
+    if (error) {
+        res.send('Not found');
+    } else {
+        res.send(data);
+    }
 })
 
 // API Endpoint 8
@@ -75,7 +109,12 @@ app.get('/api/drivers/:ref', async (req, res) => {
         .from('drivers')
         .select()
         .eq('driverRef', req.params.ref);
-    res.send(data);
+    
+    if (error) {
+        res.send('Not found');
+    } else {
+        res.send(data);
+    }
 })
 
 // API Endpoint 9 
@@ -84,7 +123,12 @@ app.get('/api/drivers/search/:substring', async (req, res) => {
         .from('drivers')
         .select()
         .ilike('forename', `%${req.params.substring}%`);
-    res.send(data);
+    
+    if (error) {
+        res.send('Not found');
+    } else {
+        res.send(data);
+    }
 })
 
 // API Endpoint 10
@@ -94,7 +138,12 @@ app.get('/api/drivers/race/:raceId', async (req, res) => {
         .select()
         .eq('raceId', req.params.raceId)
         .order('positionOrder', { ascending: true });
-    res.send(data);
+    
+    if (error) {
+        res.send('Not found');
+    } else {
+        res.send(data);
+    }
 });
 
 // API Endpoint 11
@@ -105,7 +154,12 @@ app.get('/api/races/:raceId', async (req, res) => {
             circuits ( name, location, country ), year, name
         `)
         .eq('raceId', req.params.raceId);
-    res.send(data);
+    
+    if (error) {
+        res.send('Not found');
+    } else {
+        res.send(data);
+    }
 });
 
 // API Endpoint 12
@@ -115,7 +169,12 @@ app.get('/api/races/season/:year', async (req, res) => {
         .select('name, seasons ( year )')
         .eq('year', req.params.year)
         .order('round', { ascending: true });
-    res.send(data);
+    
+    if (error) {
+        res.send('Not found');
+    } else {
+        res.send(data);
+    }
 });
 
 // API Endpoint 13
@@ -126,7 +185,12 @@ app.get('/api/races/season/:year/:round', async (req, res) => {
         .eq('year', req.params.year)
         .eq('round', req.params.round)
         .order('round', { ascending: true });
-    res.send(data);
+    
+    if (error) {
+        res.send('Not found');
+    } else {
+        res.send(data);
+    }
 })
 
 // API Endpoint 14
@@ -138,7 +202,12 @@ app.get('/api/races/circuits/:ref', async (req, res) => {
         `)
         .eq('circuits.circuitRef', req.params.ref)
         .order('year', { ascending: true });
-    res.send(data);
+    
+    if (error) {
+        res.send('Not found');
+    } else {
+        res.send(data);
+    }
 })
 
 // API Endpoint 15
@@ -152,7 +221,12 @@ app.get('/api/races/circuits/:ref/season/:start/:end', async (req, res) => {
         .gte('year', req.params.start)
         .lte('year', req.params.end)
         .order('year', { ascending: true });
-    res.send(data);
+    
+    if (error) {
+        res.send('Not found');
+    } else {
+        res.send(data);
+    }
 })
 
 // API Endpoint 16
@@ -164,9 +238,9 @@ app.get('/api/results/:raceId', async (req, res) => {
         `)
         .eq('raceId', req.params.raceId)
         .order('grid', { ascending: true });
-
+    
     if (error) {
-        res.send(error);
+        res.send('Not found');
     } else {
         res.send(data);
     }
@@ -180,9 +254,9 @@ app.get('/api/results/driver/:ref', async (req, res) => {
             drivers!inner ( driverRef, code, forename, surname )
         `)
         .eq('drivers.driverRef', req.params.ref);
-
+    
     if (error) {
-        res.send(error);
+        res.send('Not found');
     } else {
         res.send(data);
     }
@@ -200,7 +274,7 @@ app.get('/api/results/driver/:ref/seasons/:start/:end', async (req, res) => {
         .lte('races.year', req.params.end);
 
     if (error) {
-        res.send(error);
+        res.send('Not found');
     } else {
         res.send(data);
     }
@@ -215,7 +289,7 @@ app.get('/api/qualifying/:raceId', async (req, res) => {
         .order('position', { ascending: true });
     
     if (error) {
-        res.send(error);
+        res.send('Not found');
     } else {
         res.send(data);
     }
@@ -232,7 +306,7 @@ app.get('/api/standings/:raceId/drivers', async (req, res) => {
         .order('position', { ascending: true });
 
     if (error) {
-        res.send(error);
+        res.send('Not found');
     } else {
         res.send(data);
     }
@@ -249,7 +323,7 @@ app.get('/api/standings/:raceId/constructors', async (req, res) => {
         .order('position', { ascending: true });
 
     if (error) {
-        res.send(error);
+        res.send('Not found');
     } else {
         res.send(data);
     }
