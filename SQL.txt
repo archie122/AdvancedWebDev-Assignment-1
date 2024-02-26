@@ -1,0 +1,207 @@
+WARNING THIS IS VERY BAD SQL, IM TRYING TO GET BETTER :D
+
+Query 1 : 
+
+    SELECT * FROM seasons;
+
+Query 2 : 
+
+    SELECT * FROM circuits;
+
+Query 3 : 
+
+    SELECT circuitId, name, location, country, url
+    FROM circuits
+    WHERE circuitRef = 'value';
+
+
+Query 4 :
+
+    SELECT circuits.name, circuits.location, circuits.country, races.year
+    FROM races
+    JOIN circuits ON races.circuit_id = circuits.circuit_id
+    WHERE races.year = 'value'
+    ORDER BY races.round ASC;
+
+
+Query 5 :
+
+    SELECT * FROM constructors;
+
+
+Query 6 :
+
+    SELECT *
+    FROM constructors
+    WHERE constructorRef = 'value_of_req_params_ref';
+
+
+Query 7 :
+
+    SELECT * FROM drivers;
+
+
+Query 8 :!
+
+    SELECT *
+    FROM drivers
+    WHERE driverRef = 'value';
+
+
+Query 9 :!
+
+    SELECT *
+    FROM drivers
+    WHERE forename ILIKE 'value';
+
+
+Query 10 :
+
+    SELECT *
+    FROM results
+    WHERE raceId = 'value_of_req_params_raceId'
+    ORDER BY positionOrder ASC;
+
+
+Query 11 :
+
+    SELECT circuits.name, circuits.location, circuits.country, races.year, races.name
+    FROM races
+    JOIN circuits ON races.circuit_id = circuits.circuit_id
+    WHERE races.raceId = 'value_of_req_params_raceId';
+
+
+Query 12 :
+
+    SELECT races.name, seasons.year
+    FROM races
+    JOIN seasons ON races.season_id = seasons.season_id
+    WHERE seasons.year = 'value_of_req_params_year'
+    ORDER BY races.round ASC;
+
+
+Query 13 :
+
+    SELECT *
+    FROM races
+    WHERE year = 'value_of_req_params_year'
+    AND round = 'value_of_req_params_round'
+    ORDER BY round ASC;
+
+
+Query 14 :
+
+    SELECT races.raceId, races.year, circuits.circuitRef, circuits.name
+    FROM races
+    JOIN circuits ON races.circuit_id = circuits.circuit_id
+    WHERE circuits.circuitRef = 'value_of_req_params_ref'
+    ORDER BY races.year ASC;
+
+
+Query 15 :
+
+    SELECT races.raceId, races.year, circuits.circuitRef, circuits.name
+    FROM races
+    JOIN circuits ON races.circuit_id = circuits.circuit_id
+    WHERE circuits.circuitRef = 'value'
+    AND races.year >= 'value_start'
+    AND races.year <= 'value_end
+    ORDER BY races.year ASC;
+
+
+Query 16 :
+
+    SELECT 
+        drivers.driverRef, drivers.code, drivers.forename, drivers.surname,
+        races.name AS race_name, races.round, races.year, races.date,
+        constructors.name AS constructor_name, constructors.constructorRef, constructors.nationality
+    FROM 
+        results
+    JOIN 
+        drivers ON results.driver_id = drivers.driver_id
+    JOIN 
+        races ON results.race_id = races.race_id
+    JOIN 
+        constructors ON results.constructor_id = constructors.constructor_id
+    WHERE 
+        results.race_id = 'value'
+    ORDER BY 
+        results.grid ASC;
+
+
+Query 17 :
+
+    SELECT 
+        drivers.driverRef, drivers.code, drivers.forename, drivers.surname
+    FROM 
+        results
+    JOIN 
+        drivers ON results.driver_id = drivers.driver_id
+    WHERE 
+        drivers.driverRef = 'value';
+
+
+Query 18 :
+
+    SELECT 
+        drivers.driverRef, drivers.code, drivers.forename, drivers.surname,
+        races.name AS race_name, races.round, races.year, races.date
+    FROM 
+        results
+    JOIN 
+        drivers ON results.driver_id = drivers.driver_id
+    JOIN 
+        races ON results.race_id = races.race_id
+    WHERE 
+        drivers.driverRef = 'value_of_req_params_ref'
+        AND races.year >= 'value_of_req_params_start'
+        AND races.year <= 'value_of_req_params_end';
+
+
+Query 19 :
+
+    SELECT *
+    FROM qualifying
+    WHERE raceId = 'value_of_req_params_raceId'
+    ORDER BY position ASC;
+
+
+Query 20 :
+
+    SELECT 
+        drivers.forename, drivers.surname, driverStandings.*, 
+        races.name AS race_name, races.year, 
+        results.points, results.position
+    FROM 
+        driverStandings
+    JOIN 
+        drivers ON driverStandings.driver_id = drivers.driver_id
+    JOIN 
+        races ON driverStandings.race_id = races.race_id
+    LEFT JOIN 
+        results ON driverStandings.driver_id = results.driver_id 
+            AND driverStandings.race_id = results.race_id
+    WHERE 
+        driverStandings.race_id = 'value_of_req_params_raceId'
+    ORDER BY 
+        driverStandings.position ASC;
+
+
+Query 21 :
+    SELECT 
+        constructors.name AS constructor_name, constructorStandings.points, constructorStandings.wins, 
+        races.name AS race_name, races.year, 
+        results.points AS result_points, results.position AS result_position
+    FROM 
+        constructorStandings
+    JOIN 
+        constructors ON constructorStandings.constructor_id = constructors.constructor_id
+    JOIN 
+        races ON constructorStandings.race_id = races.race_id
+    LEFT JOIN 
+        results ON constructorStandings.constructor_id = results.constructor_id 
+            AND constructorStandings.race_id = results.race_id
+    WHERE 
+        constructorStandings.race_id = 'value_of_req_params_raceId'
+    ORDER BY 
+        constructorStandings.position ASC;

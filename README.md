@@ -4,7 +4,7 @@
 
 ### Archit Chouhdary 
 
-Sure, here are the API endpoints in markdown format with clickable links:
+Here is all my hard work :D
 
 - API Endpoint 01 : [https://assignment-1-archie.glitch.me/api/seasons](https://assignment-1-archie.glitch.me/api/seasons)
 - API Endpoint 02 : [https://assignment-1-archie.glitch.me/api/circuits](https://assignment-1-archie.glitch.me/api/circuits)
