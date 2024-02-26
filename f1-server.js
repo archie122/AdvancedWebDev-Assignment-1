@@ -12,9 +12,9 @@ app.get('/api/seasons', async (req, res) => {
     const {data, error} = await supabase
         .from('seasons')
         .select();
-    if (error) {
-        res.send('Not found');
-    } else {
+        if (error || data.length === 0) {
+            res.status(404).json({ error : "Season not found" });
+        }  else {
         res.send(data);
     }
 });
@@ -25,9 +25,9 @@ app.get('/api/circuits', async (req, res) => {
         .from('circuits')
         .select();
     
-    if (error) {
-        res.send('Not found');
-    } else {
+        if (error || data.length === 0) {
+            res.status(404).json({ error : "Circuit not found" });
+        } else {
         res.send(data);
     }
 });
@@ -41,8 +41,8 @@ app.get('/api/circuits/:ref', async (req, res) => {
         `)
         .eq('circuitRef', req.params.ref);
     
-    if (error) {
-        res.send('Not found');
+    if (error || data.length === 0) {
+        res.status(404).json({ error : "Circuit not found" });
     } else {
         res.send(data);
     }
@@ -56,9 +56,9 @@ app.get('/api/circuits/season/:year', async (req, res) =>{
         .eq('year', req.params.year)
         .order('round', { ascending: true });
     
-    if (error) {
-        res.send('Not found');
-    } else {
+    if (error || data.length === 0) {
+        res.status(404).json({ error : "Circuit not found" });
+    }  else {
         res.send(data);
     }
 })
@@ -69,8 +69,8 @@ app.get('/api/constructors', async (req, res) => {
         .from('constructors')
         .select();
     
-    if (error) {
-        res.send('Not found');
+    if (error || data.length === 0) {
+        res.status(404).json({ error : "Constructor not found" });
     } else {
         res.send(data);
     }
@@ -83,8 +83,8 @@ app.get('/api/constructors/:ref', async (req, res) => {
         .select()
         .eq('constructorRef', req.params.ref);
     
-    if (error) {
-        res.send('Not found');
+    if (error || data.length === 0) {
+        res.status(404).json({ error : "Constructor not found" });
     } else {
         res.send(data);
     }
@@ -96,8 +96,8 @@ app.get('/api/drivers', async (req, res) => {
         .from('drivers')
         .select();
     
-    if (error) {
-        res.send('Not found');
+    if (error || data.length === 0) {
+        res.status(404).json({ error : "Driver not found" });
     } else {
         res.send(data);
     }
@@ -110,9 +110,9 @@ app.get('/api/drivers/:ref', async (req, res) => {
         .select()
         .eq('driverRef', req.params.ref);
     
-    if (error) {
-        res.send('Not found');
-    } else {
+    if (error || data.length === 0) {
+        res.status(404).json({ error : "Driver not found" });
+    }  else {
         res.send(data);
     }
 })
@@ -124,9 +124,9 @@ app.get('/api/drivers/search/:substring', async (req, res) => {
         .select()
         .ilike('forename', `%${req.params.substring}%`);
     
-    if (error) {
-        res.send('Not found');
-    } else {
+    if (error || data.length === 0) {
+        res.status(404).json({ error : "Driver not found" });
+    }  else {
         res.send(data);
     }
 })
@@ -139,9 +139,9 @@ app.get('/api/drivers/race/:raceId', async (req, res) => {
         .eq('raceId', req.params.raceId)
         .order('positionOrder', { ascending: true });
     
-    if (error) {
-        res.send('Not found');
-    } else {
+    if (error || data.length === 0) {
+        res.status(404).json({ error : "Driver not found" });
+    }  else {
         res.send(data);
     }
 });
@@ -155,9 +155,9 @@ app.get('/api/races/:raceId', async (req, res) => {
         `)
         .eq('raceId', req.params.raceId);
     
-    if (error) {
-        res.send('Not found');
-    } else {
+    if (error || data.length === 0) {
+        res.status(404).json({ error : "Race not found" });
+    }  else {
         res.send(data);
     }
 });
@@ -170,9 +170,9 @@ app.get('/api/races/season/:year', async (req, res) => {
         .eq('year', req.params.year)
         .order('round', { ascending: true });
     
-    if (error) {
-        res.send('Not found');
-    } else {
+    if (error || data.length === 0) {
+        res.status(404).json({ error : "Race not found" });
+    }  else {
         res.send(data);
     }
 });
@@ -186,9 +186,9 @@ app.get('/api/races/season/:year/:round', async (req, res) => {
         .eq('round', req.params.round)
         .order('round', { ascending: true });
     
-    if (error) {
-        res.send('Not found');
-    } else {
+    if (error || data.length === 0) {
+        res.status(404).json({ error : "Race not found" });
+    }  else {
         res.send(data);
     }
 })
@@ -203,9 +203,9 @@ app.get('/api/races/circuits/:ref', async (req, res) => {
         .eq('circuits.circuitRef', req.params.ref)
         .order('year', { ascending: true });
     
-    if (error) {
-        res.send('Not found');
-    } else {
+    if (error || data.length === 0) {
+        res.status(404).json({ error : "Circuit not found" });
+    }  else {
         res.send(data);
     }
 })
@@ -222,8 +222,8 @@ app.get('/api/races/circuits/:ref/season/:start/:end', async (req, res) => {
         .lte('year', req.params.end)
         .order('year', { ascending: true });
     
-    if (error) {
-        res.send('Not found');
+    if (error || data.length === 0) {
+        res.status(404).json({ error : "Circuit not found" });
     } else {
         res.send(data);
     }
@@ -239,9 +239,9 @@ app.get('/api/results/:raceId', async (req, res) => {
         .eq('raceId', req.params.raceId)
         .order('grid', { ascending: true });
     
-    if (error) {
-        res.send('Not found');
-    } else {
+    if (error || data.length === 0) {
+        res.status(404).json({ error : "Circuit not found" });
+    }  else {
         res.send(data);
     }
 })
@@ -255,9 +255,9 @@ app.get('/api/results/driver/:ref', async (req, res) => {
         `)
         .eq('drivers.driverRef', req.params.ref);
     
-    if (error) {
-        res.send('Not found');
-    } else {
+    if (error || data.length === 0) {
+        res.status(404).json({ error : "Driver not found" });
+    }  else {
         res.send(data);
     }
 });
@@ -273,9 +273,9 @@ app.get('/api/results/driver/:ref/seasons/:start/:end', async (req, res) => {
         .gte('races.year', req.params.start)
         .lte('races.year', req.params.end);
 
-    if (error) {
-        res.send('Not found');
-    } else {
+    if (error || data.length === 0) {
+        res.status(404).json({ error : "Driver not found" });
+    }  else {
         res.send(data);
     }
 })
@@ -288,9 +288,9 @@ app.get('/api/qualifying/:raceId', async (req, res) => {
         .eq('raceId', req.params.raceId)
         .order('position', { ascending: true });
     
-    if (error) {
-        res.send('Not found');
-    } else {
+    if (error || data.length === 0) {
+        res.status(404).json({ error : "Race not found" });
+    }  else {
         res.send(data);
     }
 })
@@ -305,9 +305,9 @@ app.get('/api/standings/:raceId/drivers', async (req, res) => {
         .eq('raceId', req.params.raceId)
         .order('position', { ascending: true });
 
-    if (error) {
-        res.send('Not found');
-    } else {
+    if (error || data.length === 0) {
+        res.status(404).json({ error : "Information not found" });
+    }  else {
         res.send(data);
     }
 });
@@ -322,9 +322,9 @@ app.get('/api/standings/:raceId/constructors', async (req, res) => {
         .eq('raceId', req.params.raceId)
         .order('position', { ascending: true });
 
-    if (error) {
-        res.send('Not found');
-    } else {
+    if (error || data.length === 0) {
+        res.status(404).json({ error : "Information not found" });
+    }  else {
         res.send(data);
     }
 });
@@ -332,5 +332,4 @@ app.get('/api/standings/:raceId/constructors', async (req, res) => {
 
 app.listen(8080, () => {
     console.log('listening on port 8080');
-    console.log('http://localhost:8080/api/status');
 })
