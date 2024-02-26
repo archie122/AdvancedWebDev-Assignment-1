@@ -2,9 +2,9 @@
 
 ## Description 
 
-API Endpoint 1 - [http://localhost:8080/api/seasons] __
-API Endpoint 2 - [http://localhost:8080/api/circuits] __
-API Endpoint 3 - [http://localhost:8080/api/circuits/] __
+API Endpoint 1 - [http://localhost:8080/api/seasons]  
+API Endpoint 2 - [http://localhost:8080/api/circuits]  
+API Endpoint 3 - [http://localhost:8080/api/circuits/]  
 API Endpoint 4
 API Endpoint 5
 API Endpoint 6
